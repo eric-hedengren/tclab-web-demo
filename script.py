@@ -1,7 +1,7 @@
+import js
+import pyodide
 import time
 import random
-import serial
-from serial.tools import list_ports
 
 class Labtime():
     def __init__(self):
