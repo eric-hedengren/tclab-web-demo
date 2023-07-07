@@ -1,7 +1,10 @@
 import js
-import pyodide
 import time
 import random
+from pyodide.ffi import to_js
+import serial
+from serial.tools import list_ports
+
 
 class Labtime():
     def __init__(self):
@@ -52,6 +55,7 @@ class Labtime():
         self._labtime = val
         self._realtime = time.time()
 
+
 labtime = Labtime()
 sep = ' '
 
@@ -63,6 +67,60 @@ arduinos = [('USB VID:PID=16D0:0613', 'Arduino Uno'),
 
 _sketchurl = 'https://github.com/jckantor/TCLab-sketch'
 _connected = False
+
+
+def j(obj):
+    return to_js(obj, dict_converter=js.Object.fromEntries)
+
+class SerialManager():
+    async def askForSerial(self):
+        if not hasattr(js.navigator, 'serial'):
+            warning = "This browser does not support WebSerial; see https://developer.mozilla.org/en-US/docs/Web/API/Web_Serial_API#browser_compatibility for a list of compatible browsers."
+            print(warning)
+            raise NotImplementedError(warning)
+
+        self.port = await js.navigator.serial.requestPort()
+        await self.port.open(j({"baudRate": 9600}))
+        js.console.log("OPENED PORT")
+
+        self.encoder = js.TextEncoderStream.new()
+        outputDone = self.encoder.readable.pipeTo(self.port.writable)
+
+        self.decoder = js.TextDecoderStream.new()
+        inputDone = self.port.readable.pipeTo(self.decoder.writable)
+        inputStream = self.decoder.readable
+
+        self.reader = inputStream.getReader();
+        await self.listenAndEcho()
+
+    async def writeToSerial(self, data):
+        outputWriter = self.encoder.writable.getWriter()
+        outputWriter.write(data + '\n')
+        outputWriter.releaseLock()
+        js.console.log(f"Wrote to stream: {data}")
+
+    async def listenAndEcho(self):
+        receivedValues = []
+        while (True):
+            response = await self.reader.read()
+            value, done = response.value, response.done
+            if ('\r' in value or '\n' in value):
+                print(f"Received from Serial: {''.join(receivedValues)}")
+                receivedValues = []
+            elif (value):
+                print(f"Received Char: {value}")
+                receivedValues.append(value)
+
+sm = SerialManager()
+
+async def sendValueFromInputBox(sm: SerialManager):
+    textInput = js.document.getElementById("text")
+    value = textInput.value
+    textInput.value = ''
+    print(f"Writing to Serial Port: {value}")
+
+    await sm.writeToSerial(value)
+
 
 def clip(val, lower=0, upper=100):
     return max(lower, min(val, upper))
