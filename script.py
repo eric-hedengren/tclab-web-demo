@@ -13,11 +13,9 @@ class Labtime():
 
     @property
     def running(self):
-        """Returns variable indicating whether labtime is running."""
         return self._running
 
     def time(self):
-        """Return current labtime."""
         if self.running:
             elapsed = time.time() - self._realtime
             return self._labtime + self._rate * elapsed
@@ -25,7 +23,6 @@ class Labtime():
             return self._labtime
 
     def set_rate(self, rate=1):
-        """Set the rate of labtime relative to real time."""
         if rate <= 0:
             raise ValueError("Labtime rates must be positive.")
         self._labtime = self.time()
@@ -33,11 +30,9 @@ class Labtime():
         self._rate = rate
 
     def get_rate(self):
-        """Return the rate of labtime relative to real time."""
         return self._rate
 
     def sleep(self, delay):
-        """Sleep in labtime for a period delay."""
         self.lastsleep = delay
         if self._running:
             time.sleep(delay / self._rate)
@@ -45,18 +40,15 @@ class Labtime():
             raise RuntimeWarning("sleep is not valid when labtime is stopped.")
 
     def stop(self):
-        """Stop labtime."""
         self._labtime = self.time()
         self._realtime = time.time()
         self._running = False
 
     def start(self):
-        """Restart labtime."""
         self._realtime = time.time()
         self._running = True
 
     def reset(self, val=0):
-        """Reset labtime to a specified value."""
         self._labtime = val
         self._realtime = time.time()
 
@@ -78,14 +70,14 @@ def clip(val, lower=0, upper=100):
 def command(name, argument, lower=0, upper=100):
     return name + sep + str(clip(argument, lower, upper))
 
-def find_arduino(port=''): # major fixes needed here!
-    comports = [tuple for tuple in list_ports.comports() if port in tuple[0]]
+def find_arduino(port=''):
+    comports = [tuple for tuple in list_ports.comports() if port in tuple[0]] # fix needed
     for port, desc, hwid in comports:
         for identifier, arduino in arduinos:
             if hwid.startswith(identifier):
                 return port, arduino
     print('--- Serial Ports ---')
-    for port, desc, hwid in list_ports.comports():
+    for port, desc, hwid in list_ports.comports(): # fix needed
         print(port, desc, hwid)
     return None, None
 
@@ -146,7 +138,7 @@ class TCLab(object):
         
         _connected = True
 
-        self.sp = serial.Serial(port=self.port, baudrate=baud, timeout=2)
+        self.sp = serial.Serial(port=self.port, baudrate=baud, timeout=2) # fix needed
         time.sleep(2)
         self.Q1(0)
         self.baud = baud
