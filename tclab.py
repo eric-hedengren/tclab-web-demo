@@ -20,6 +20,9 @@ class TCLab():
     def set_led(self, level):
         self.write(f'LED {int(level)}')
 
+    def change_heater(self, option, level):
+        self.write(f'Q{option} {int(level)}')
+
 tc = TCLab()
 
 def initialize():
