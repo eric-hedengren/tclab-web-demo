@@ -9,6 +9,17 @@ class TCLab():
         self.port = await js.navigator.serial.requestPort()
         await self.port.open(convert(115200))
 
+        self.encoder = js.TextEncoderStream.new()
+        self.encoder.readable.pipeTo(self.port.writable)
+
+    def write(self, command):
+        writer = self.encoder.writable.getWriter()
+        writer.write(command + '\n')
+        writer.releaseLock()
+
+    def set_led(self, level):
+        self.write(f'LED {int(level)}')
+
 tc = TCLab()
 
 def initialize():
