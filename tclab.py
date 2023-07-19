@@ -11,11 +11,10 @@ class TCLab():
 
         self.encoder = js.TextEncoderStream.new()
         self.encoder.readable.pipeTo(self.port.writable)
+        self.writer = self.encoder.writable.getWriter()
 
     def write(self, command):
-        writer = self.encoder.writable.getWriter()
-        writer.write(command + '\n')
-        writer.releaseLock()
+        self.writer.write(command + '\n')
 
     def set_led(self, level):
         self.write(f'LED {int(level)}')
