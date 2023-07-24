@@ -1,28 +1,14 @@
-import pyodide
+import js
 import asyncio
 
-def convert(br):
-    return pyodide.ffi.to_js({"baudRate": br}, dict_converter=js.Object.fromEntries)
+loop = asyncio.get_event_loop()
 
 class TCLab():
-    async def connect(self):
-        self.port = await js.navigator.serial.requestPort()
-        await self.port.open(convert(115200))
+    def connect(self):
+        loop.run_until_complete(js.connect())
 
-        self.encoder = js.TextEncoderStream.new()
-        self.encoder.readable.pipeTo(self.port.writable)
-        self.writer = self.encoder.writable.getWriter()
-
-    def write(self, command):
-        self.writer.write(command + '\n')
-
-    def set_led(self, level):
-        self.write(f'LED {int(level)}')
-
-    def change_heater(self, option, level):
-        self.write(f'Q{option} {int(level)}')
+    def read(self, option):
+        loop.run_until_complete(js.read(f'T{option}\n'))
+        print(js.give())
 
 tc = TCLab()
-
-def initialize():
-    asyncio.get_event_loop().run_until_complete(tc.connect())
