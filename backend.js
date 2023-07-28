@@ -24,9 +24,9 @@ async function read(command) {
         data.value += extra.value;
     }
     await new Promise(r => setTimeout(r, 50));
-    value = data.value.replace('\r\n', '')
+    value = data.value.replace('\r\n', '');
 }
 
 function give() {
-    return value
+    return value;
 }
