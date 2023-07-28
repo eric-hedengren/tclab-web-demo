@@ -22,8 +22,8 @@ async function connect() {
 async function gather() {
     x = await grab();
 
-    if (x != '100.00' && x.length < 7 && !x.includes('\r') && !x.includes('\n')) {
-        data.push(x);
+    if (x.length == 6 && !x.includes('\r') && !x.includes('\n') && x != '100.00' && x != '0.00' && x != '80.000' && x != '0.000') {
+        data.push(parseFloat(x));
     }    
 }
 
