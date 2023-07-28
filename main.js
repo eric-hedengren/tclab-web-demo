@@ -20,7 +20,11 @@ async function connect() {
 }
 
 async function gather() {
-    data.push(await grab());
+    x = await grab();
+
+    if (x != '100.00' && x.length < 7 && !x.includes('\r') && !x.includes('\n')) {
+        data.push(x);
+    }    
 }
 
 async function grab() {
@@ -30,7 +34,7 @@ async function grab() {
     let current = await reader.read();
     let value = current.value;
 
-    if (value.indexOf('\r\n') != 6) {
+    if (!value.endsWith('\r\n')) {
         await new Promise(r => setTimeout(r, 50));
         current = await reader.read();
         value += current.value;
@@ -38,4 +42,8 @@ async function grab() {
 
     await new Promise(r => setTimeout(r, 50));
     return value.replace('\r\n', '');
+}
+
+async function command(input) {
+    await writer.write(input+'\n')
 }
