@@ -1,14 +1,11 @@
 <head>
-    <py-script src="tclab.py"></py-script>
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css"/>
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <py-script src="tclab.py"></py-script>
+    <script src="backend.js"></script>
 </head>
 <body>
-    <button py-click="initialize()">Connect</button>
-    <button py-click="tc.set_led(100)">Turn on LED</button>
-    <button py-click="tc.set_led(0)">Turn off LED</button>
-    <button py-click="tc.change_heater(1, 80)">Turn on Heater 1</button>
-    <button py-click="tc.change_heater(1, 0)">Turn off Heater 1</button>
-    <button py-click="tc.change_heater(2, 80)">Turn on Heater 2</button>
-    <button py-click="tc.change_heater(2, 0)">Turn off Heater 2</button>
+    <button py-click="tc.connect()">Connect</button>
+    <button py-click="tc.read(1)">Read Temperature 1</button>
+    <button py-click="tc.read(2)">Read Temperature 2</button>
 </body>
