@@ -1,3 +1,4 @@
+import js
 import pyodide
 import asyncio
 
