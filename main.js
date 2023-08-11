@@ -1,9 +1,9 @@
-let writer, reader;
-const data = [];
+let writer, reader, connected;
 
 async function connect() {
     const port = await navigator.serial.requestPort();
     await port.open({ baudRate: 115200 });
+    connected = true;
 
     const textEncoder = new TextEncoderStream();
     textEncoder.readable.pipeTo(port.writable);
@@ -12,27 +12,6 @@ async function connect() {
     const textDecoder = new TextDecoderStream();
     port.readable.pipeTo(textDecoder.writable);
     reader = textDecoder.readable.getReader();
-
-    while (true) {
-        const value = await command('RT');
-        if (value.length == 6 && !value.includes('\r') && !value.includes('\n') && value != '100.00') {
-            data.push(parseFloat(value));
-        }
-    }
-}
-
-async function command(option) {
-    if (option == 'RT') {
-        return await response('T1');
-    } else if (option == 'HON') {
-        await response('Q1 100');
-    } else if (option == 'HOF') {
-        await response('Q1 0');
-    } else if (option == 'LON') {
-        await response('LED 100');
-    } else if (option == 'LOF') {
-        await response('LED 0');
-    }
 }
 
 async function response(key) {
@@ -50,4 +29,18 @@ async function response(key) {
 
     await new Promise(r => setTimeout(r, 50));
     return value.replace('\r\n', '');
+}
+
+async function command(option) {
+    if (option == 'RT') {
+        return await response('T1');
+    } else if (option == 'HON') {
+        await response('Q1 100');
+    } else if (option == 'HOF') {
+        await response('Q1 0');
+    } else if (option == 'LON') {
+        await response('LED 100');
+    } else if (option == 'LOF') {
+        await response('LED 0');
+    }
 }
