@@ -15,9 +15,9 @@
         }, 1000);
 
         function createChart() {
-            var smoothie = new SmoothieChart({ responsive: true });
-            smoothie.addTimeSeries(line1, {strokeStyle:'rgba(0, 255, 0, 1)', fillStyle:'rgba(0, 255, 0, 0.2)', lineWidth:4});
-            smoothie.streamTo(document.getElementById("chart"), 1000);
+            var chart = new SmoothieChart({ responsive: true });
+            chart.addTimeSeries(line1, {strokeStyle:'rgba(0, 255, 0, 1)', fillStyle:'rgba(0, 255, 0, 0.2)', lineWidth:4});
+            chart.streamTo(document.getElementById("chart"), 1000);
         }
     </script>
 </head>
