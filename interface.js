@@ -1,9 +1,8 @@
-let writer, reader, connected;
+let writer, reader, heater, led, connected;
 
 async function connect() {
     const port = await navigator.serial.requestPort();
     await port.open({ baudRate: 115200 });
-    connected = true;
 
     const textEncoder = new TextEncoderStream();
     textEncoder.readable.pipeTo(port.writable);
@@ -12,6 +11,10 @@ async function connect() {
     const textDecoder = new TextDecoderStream();
     port.readable.pipeTo(textDecoder.writable);
     reader = textDecoder.readable.getReader();
+
+    heater = false;
+    led = true;
+    connected = true;
 }
 
 async function response(key) {
@@ -32,15 +35,27 @@ async function response(key) {
 }
 
 async function command(option) {
-    if (option == 'RT') {
-        return await response('T1');
-    } else if (option == 'HON') {
-        await response('Q1 100');
-    } else if (option == 'HOF') {
-        await response('Q1 0');
-    } else if (option == 'LON') {
-        await response('LED 100');
-    } else if (option == 'LOF') {
-        await response('LED 0');
+    if (connected) {
+        if (option == 'R') {
+            return await response('T1');
+        }
+
+        else if (option == 'H') {
+            if (!heater) {
+                await response('Q1 100');
+                heater = true;
+            } else {
+                await response('Q1 0');
+                heater = false;
+            }
+        } else if (option == 'L') {
+            if (led) {
+                await response('LED 0');
+                led = false;
+            } else {
+                await response('LED 100');
+                led = true;
+            }
+        }
     }
 }

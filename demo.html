@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="imports/smoothie.js"></script>
+    <script src="interface.js"></script>
+    <script src="display.js"></script>
+</head>
+<body onload="createChart()">
+    <div><button onclick="connect()">Connect</button></div>
+    <canvas id="chart"></canvas>
+    <div>
+        <button onclick="command('H')">Heater</button>
+        <button onclick="command('L')">LED</button>
+    </div>
+</body>
+</html>

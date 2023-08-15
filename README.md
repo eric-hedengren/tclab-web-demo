@@ -1,2 +1,2 @@
 ### TCLab Web Demo
-This repository is the code for the TCLab Web Demo! Users can easily access the website and try out the heaters and temperature sensors for the first time before getting started. This will allow new users to have some easy success which will make them excited about learning their course.
+This repository is the code for the TCLab Web Demo! Users can easily access the website and try out the heaters and temperature sensors for the first time before getting started with their course.
