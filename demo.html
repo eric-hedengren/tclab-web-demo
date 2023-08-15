@@ -12,8 +12,10 @@
     <div><button onclick="connect()">Connect</button></div>
     <canvas id="chart"></canvas>
     <div>
-        <button onclick="command('H')">Heater</button>
-        <button onclick="command('L')">LED</button>
+        <label for="heater">Heater</label>
+        <input type="checkbox" id="heater" onclick="command('H')">
+        <label for="led">LED</label>
+        <input type="checkbox" id="led" onclick="command('L')" checked>
     </div>
 </body>
 </html>
