@@ -15,6 +15,9 @@ async function connect() {
     heater = false;
     led = true;
     connected = true;
+
+    document.getElementById('heater').disabled = false;
+    document.getElementById('led').disabled = false;
 }
 
 async function response(key) {

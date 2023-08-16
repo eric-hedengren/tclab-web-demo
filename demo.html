@@ -8,14 +8,12 @@
     <script src="interface.js"></script>
     <script src="display.js"></script>
 </head>
-<body onload="createChart()">
-    <div><button onclick="connect()">Connect</button></div>
-    <canvas id="chart"></canvas>
-    <div>
-        <label for="heater">Heater</label>
-        <input type="checkbox" id="heater" onclick="command('H')">
-        <label for="led">LED</label>
-        <input type="checkbox" id="led" onclick="command('L')" checked>
-    </div>
+<body onload="createChart();">
+    <button onclick="connect();">Connect</button><br>
+    <canvas id="chart"></canvas><br>
+    <label for="heater">Heater</label>
+    <input type="checkbox" disabled="true" id="heater" onclick="command('H')">
+    <label for="led">LED</label>
+    <input type="checkbox" disabled="true" id="led" onclick="command('L')" checked>
 </body>
 </html>
