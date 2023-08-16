@@ -1,4 +1,4 @@
-let writer, reader, heater, led, connected;
+let writer, reader, heater, light, connected;
 
 async function connect() {
     const port = await navigator.serial.requestPort();
@@ -13,11 +13,11 @@ async function connect() {
     reader = textDecoder.readable.getReader();
 
     heater = false;
-    led = true;
+    light = true;
     connected = true;
 
     document.getElementById('heater').disabled = false;
-    document.getElementById('led').disabled = false;
+    document.getElementById('light').disabled = false;
 }
 
 async function response(key) {
@@ -52,12 +52,12 @@ async function command(option) {
                 heater = false;
             }
         } else if (option == 'L') {
-            if (led) {
+            if (light) {
                 await response('LED 0');
-                led = false;
+                light = false;
             } else {
                 await response('LED 100');
-                led = true;
+                light = true;
             }
         }
     }
