@@ -3,17 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo</title>
+    <title>TCLab Demo</title>
+    <link rel="stylesheet" href="styles.css">
     <script src="imports/smoothie.js"></script>
     <script src="interface.js"></script>
     <script src="display.js"></script>
 </head>
 <body onload="createChart()">
-    <button onclick="connect()">Connect</button><br>
-    <canvas id="chart"></canvas><br>
-    <label for="heater">Heater</label>
-    <input type="checkbox" disabled="true" id="heater" onclick="command('H')">
-    <label for="light">Light</label>
-    <input type="checkbox" disabled="true" id="light" onclick="command('L')" checked>
+    <div class="first">
+        <button onclick="connect()">Connect</button>
+    </div>
+    <div class="first">
+        <canvas id="chart"></canvas>
+    </div>
+    <div class="first">
+        <div class="second">
+            <div class="third">
+                <label for="heater">Heater</label>
+            </div>
+            <div class="third">
+                <label class="switch">
+                    <input type="checkbox" disabled="true" id="heater" onclick="command('H')">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+        <div class="second">
+            <div class="third">
+                <label for="light">Light</label><br>
+            </div>
+            <div class="third">
+                <label class="switch">
+                    <input type="checkbox" disabled="true" id="light" onclick="command('L')" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
