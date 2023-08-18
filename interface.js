@@ -20,8 +20,8 @@ async function connect() {
     document.getElementById('light').disabled = false;
 }
 
-async function response(key) {
-    await writer.write(key+'\n');
+async function response(request) {
+    await writer.write(request+'\n');
     await new Promise(r => setTimeout(r, 50));
 
     let current = await reader.read();
