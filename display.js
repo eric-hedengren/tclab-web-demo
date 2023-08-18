@@ -5,13 +5,18 @@ const standard = getComputedStyle(document.querySelector(':root')).getPropertyVa
 
 setInterval(async function() {
     const value = await command('R');
-    if (value && value.length == 6 && !value.includes('\r') && !value.includes('\n') && value != '100.00' && value != '00.000') {
-        line.append(Date.now(), value);
+    if (value && value.length == 6 && !value.includes('\r') && !value.includes('\n') && !value.includes('0.00')) {
+        line.append(Date.now(), parseFloat(value));
+    } else {
+        const value = await command('R');
+        if (value && value.length == 6 && !value.includes('\r') && !value.includes('\n') && !value.includes('0.00')) {
+            line.append(Date.now(), parseFloat(value));
+        }
     }
-}, 1000);
+}, 400);
 
 function createChart() {
-    const chart = new SmoothieChart({responsive: true, grid: {strokeStyle: standard}, labels: {fillStyle: highlight}});
+    const chart = new SmoothieChart({responsive: true, millisPerPixel: 10, grid: {strokeStyle: standard, verticalSections: 0, millisPerLine: 300}, labels: {precision: 3, fontSize: 20, fillStyle: highlight}});
     chart.addTimeSeries(line, {lineWidth: 4, strokeStyle: primary, fillStyle: primary.substring(0,primary.length-1)+', .4)'});
-    chart.streamTo(document.getElementById("chart"), 1000);
+    chart.streamTo(document.getElementById("chart"), 800);
 }
