@@ -31,7 +31,7 @@ setInterval(async function() {
 }, 400);
 
 function createChart() {
-    const chart = new SmoothieChart({responsive: true, millisPerPixel: 10, grid: {strokeStyle: standard, verticalSections: 0, millisPerLine: 500}, labels: {precision: 3, fontSize: 20, fillStyle: accent}});
+    const chart = new SmoothieChart({responsive: true, millisPerPixel: 10, grid: {strokeStyle: standard, borderVisible: false, verticalSections: 0, millisPerLine: 500}, labels: {precision: 3, fontSize: 20, fillStyle: accent}});
     chart.addTimeSeries(line, {lineWidth: 4, strokeStyle: primary, fillStyle: primaryTranslucent});
     chart.streamTo(document.getElementById("chart"), 800);
 }
