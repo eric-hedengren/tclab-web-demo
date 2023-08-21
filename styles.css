@@ -1,14 +1,17 @@
-:root {
+:root {    
     --style: Tahoma, Verdana, Segoe, sans-serif;
-    --highlight: rgb(227, 246, 245);
-    --standard: rgb(39, 35, 67);
-    --primary: rgb(186, 232, 232);
+    --primary: rgb(230, 0, 0);
+    --primary-translucent: rgba(230, 0, 0, 0.4);
+    --accent: rgb(230, 159, 159);
+    --accent-transparent: rgba(230, 159, 159, 0.1);
+    --accent-translucent: rgba(230, 159, 159, .2);
+    --standard: rgb(56, 0, 0);
 }
 
 body {
-    background-color: var(--standard);
-    text-align: center;
     margin: 0;
+    text-align: center;
+    background-color: var(--standard);
 }
 
 .first {
@@ -16,25 +19,25 @@ body {
 }
 
 .second {
-    align-items: center;
     display: inline-flex;
+    align-items: center;
 }
 
 .third {
-    margin-right: 5px;
     margin-left: 5px;
+    margin-right: 5px;
 }
 
 canvas {
-    height: 400px;
     width: 100%;
+    height: 400px;
 }
 
 label {
+    color: var(--accent);
     font-size: 30px;
     font-weight: 50;
     font-family: var(--style);
-    color: var(--highlight);
 }
 
 .switch {
@@ -57,7 +60,7 @@ label {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: var(--highlight);
+    background-color: var(--accent);
     -webkit-transition: .4s;
     transition: .4s;
     border-radius: 34px;
@@ -94,7 +97,7 @@ button {
     background-color: var(--primary);
     border: 1px solid var(--primary);
     border-radius: 4px;
-    box-shadow: rgba(227, 246, 245, .05) 0 2px 4px 0;
+    box-shadow: var(--accent-transparent) 0 2px 4px 0;
     box-sizing: border-box;
     color: var(--standard);
     cursor: pointer;
@@ -113,7 +116,7 @@ button {
 }
 
 button:hover {
-    box-shadow: rgba(227, 246, 245, .15) 0 3px 9px 0;
+    box-shadow: var(--accent-translucent) 0 3px 9px 0;
     transform: translateY(-2px);
 }
 
