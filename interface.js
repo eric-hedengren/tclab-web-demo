@@ -38,27 +38,28 @@ async function response(request) {
 }
 
 async function command(option) {
-    if (connected) {
-        if (option == 'R') {
-            return await response('T1');
+    if (option == 'R') {
+        if (connected) {
+            let value = await response('T1');
+            if (value.length == 6 && !value.includes('\r') && !value.includes('\n') && !value.includes('0.00')) {
+                return value;
+            }
         }
-
-        else if (option == 'H') {
-            if (!heater) {
-                await response('Q1 100');
-                heater = true;
-            } else {
-                await response('Q1 0');
-                heater = false;
-            }
-        } else if (option == 'L') {
-            if (light) {
-                await response('LED 0');
-                light = false;
-            } else {
-                await response('LED 100');
-                light = true;
-            }
+    } else if (option == 'H') {
+        if (!heater) {
+            await response('Q1 100');
+            heater = true;
+        } else {
+            await response('Q1 0');
+            heater = false;
+        }
+    } else if (option == 'L') {
+        if (light) {
+            await response('LED 0');
+            light = false;
+        } else {
+            await response('LED 100');
+            light = true;
         }
     }
 }
