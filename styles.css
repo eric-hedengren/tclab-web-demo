@@ -1,11 +1,11 @@
 :root {    
     --style: Tahoma, Verdana, Segoe, sans-serif;
-    --primary: rgb(230, 0, 0);
-    --primary-translucent: rgba(230, 0, 0, 0.4);
-    --accent: rgb(230, 159, 159);
-    --accent-transparent: rgba(230, 159, 159, 0.1);
-    --accent-translucent: rgba(230, 159, 159, .2);
-    --standard: rgb(56, 0, 0);
+    --primary: rgb(32, 194, 14);
+    --primary-translucent: rgba(32, 194, 14, 0.4);
+    --accent: rgb(196, 196, 196);
+    --accent-transparent: rgba(196, 196, 196, 0.1);
+    --accent-translucent: rgba(196, 196, 196, 0.2);
+    --standard: rgb(15, 15, 15);
 }
 
 body {
