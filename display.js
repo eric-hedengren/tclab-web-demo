@@ -1,5 +1,3 @@
-let previous;
-
 const primary = getComputedStyle(document.querySelector(':root')).getPropertyValue('--primary');
 const primaryTranslucent = getComputedStyle(document.querySelector(':root')).getPropertyValue('--primary-translucent');
 const accent = getComputedStyle(document.querySelector(':root')).getPropertyValue('--accent');
